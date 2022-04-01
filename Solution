@@ -1,0 +1,57 @@
+using System;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Collections.Generic;
+using System.Collections;
+
+
+namespace AssociativeArrays
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<string> input = Console.ReadLine().Split(" -> ", StringSplitOptions.RemoveEmptyEntries).ToList();
+
+            Dictionary<string, List<string>> result = new Dictionary<string, List<string>> ();
+
+            while (input[0]!= "End")
+            {
+
+                if (!result.ContainsKey(input[0]))
+                {
+                    result.Add(input[0], new List<string>());
+                }
+                
+
+                result[input[0]].Add(input[1]);
+
+                input = Console.ReadLine().Split(" -> ", StringSplitOptions.RemoveEmptyEntries).ToList();
+            }
+
+            foreach (var item in result)
+            {
+                Console.WriteLine($"{item.Key}");
+                List<string> nums = item.Value;
+
+                for (int i = 0; i < nums.Count-1; i++) // 1 2 3 4 5 6 7
+                {
+                    for (int j = i+1; j < nums.Count; j++)
+                    {
+                        if (nums[i] == nums[j])
+                        {
+                            nums.RemoveAt(j);
+                            j--;
+                        }
+                    }
+                }
+
+                foreach (var num in nums)
+                {
+                    Console.WriteLine($"-- {num}");
+                }
+            }
+        }
+    }
+}
